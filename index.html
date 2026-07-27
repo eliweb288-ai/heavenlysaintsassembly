@@ -91,6 +91,8 @@ input,textarea,select{font-family:inherit}
 .page-header p{font-size:13px;color:var(--muted)}
 .fpanel{background:var(--white);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow);margin-bottom:20px}
 .fpanel h3{font-family:'Cinzel',serif;font-size:15px;color:var(--navy);margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid var(--light)}
+.fpanel-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid var(--light);flex-wrap:wrap}
+.fpanel-head h3{margin:0;padding:0;border:none}
 .fg{margin-bottom:14px}
 .fg label{display:block;font-size:11px;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px}
 .fg input,.fg textarea,.fg select{width:100%;padding:10px 13px;border:1.5px solid var(--light);border-radius:7px;font-size:13.5px;color:var(--text);background:var(--off);outline:none;transition:border .2s}
@@ -148,6 +150,8 @@ input,textarea,select{font-family:inherit}
 .upload-area strong{color:var(--mid)}
 .preview-img{width:100%;max-height:200px;object-fit:contain;border-radius:6px;margin-top:12px;border:2px solid var(--light);display:none;background:#f8f8f8}
 .preview-img.show{display:block}
+.preview-video{width:100%;max-height:260px;border-radius:6px;margin-top:12px;border:2px solid var(--light);display:none;background:#000}
+.preview-video.show{display:block}
 .upload-status{margin-top:10px;padding:10px 13px;border-radius:7px;font-size:12.5px;font-weight:700;display:none;align-items:center;gap:8px}
 .upload-status.show{display:flex}
 .upload-status.uploading{background:#dbeafe;color:#1e40af;border:1px solid #93c5fd}
@@ -175,8 +179,15 @@ input,textarea,select{font-family:inherit}
 .loading-overlay{position:fixed;inset:0;background:rgba(10,22,40,.7);z-index:99998;display:none;align-items:center;justify-content:center;flex-direction:column;gap:14px}
 .loading-overlay.show{display:flex}
 .loading-overlay p{color:var(--white);font-size:14px;font-weight:700}
-.sermon-url-preview{margin-top:8px;padding:8px 12px;background:#dbeafe;color:#1e40af;border-radius:6px;font-size:12px;font-weight:700;display:none;word-break:break-all}
-.sermon-url-preview.show{display:block}
+.sermon-admin-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;margin-top:16px}
+.sermon-admin-card{background:var(--white);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;border:1px solid var(--light)}
+.sermon-admin-vid{width:100%;height:150px;background:#000;position:relative}
+.sermon-admin-vid video{width:100%;height:100%;object-fit:cover;display:block}
+.sermon-admin-body{padding:12px 14px}
+.sermon-admin-title{font-family:'Cinzel',serif;font-size:13px;color:var(--navy);font-weight:700;margin-bottom:3px;line-height:1.3}
+.sermon-admin-meta{font-size:11.5px;color:var(--muted);margin-bottom:10px}
+.sermon-admin-actions{display:flex;gap:7px}
+.sermon-empty-state{text-align:center;padding:40px 16px;color:var(--muted);font-size:13px}
 
 /* ═══ MAIN SITE ═══ */
 #main-site{display:block}
@@ -296,7 +307,7 @@ nav.sitenav{background:var(--white);position:sticky;top:0;z-index:1000;box-shado
 .gali.span2c.span2r{grid-column:span 2;grid-row:span 2}
 .galph{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;color:rgba(255,255,255,.3);font-size:11px;text-align:center;gap:5px;padding:8px;background:var(--blue)}
 
-/* ═══ SERMONS — FIXED ═══ */
+/* ═══ SERMONS ═══ */
 .sermons-grid{
   display:flex;
   flex-direction:column;
@@ -330,22 +341,16 @@ nav.sitenav{background:var(--white);position:sticky;top:0;z-index:1000;box-shado
   width:100%;
   position:relative;
   background:#000;
-  min-height:360px;
+  min-height:220px;
   display:flex;
   align-items:center;
   justify-content:center;
 }
-/* Make the FB iframe fill the wrapper */
-.sermon-embed-wrap .fb-video,
-.sermon-embed-wrap .fb-video > span,
-.sermon-embed-wrap .fb-video > span > iframe {
+.sermon-embed-wrap video{
   width:100%!important;
-  min-width:100%!important;
-}
-.sermon-reactions{
-  padding:10px 18px 14px;
-  background:rgba(255,255,255,.04);
-  border-top:1px solid rgba(255,255,255,.08);
+  max-height:520px;
+  display:block;
+  background:#000;
 }
 .sermon-no-videos{
   text-align:center;
@@ -428,36 +433,17 @@ footer.sitefooter{background:var(--navy);color:rgba(255,255,255,.65)}
 .wafl:hover .watip{opacity:1}
 .sec-divider{height:1px;background:linear-gradient(90deg,transparent,var(--light),transparent);margin:0 20px}
 @keyframes pwa{0%,100%{box-shadow:0 0 0 0 rgba(37,211,102,.50)}55%{box-shadow:0 0 0 13px rgba(37,211,102,0)}}
-@keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:none}}
 .reveal{opacity:0;transform:translateY(24px);transition:opacity .56s ease,transform .56s ease}
 .reveal.visible{opacity:1;transform:none}
 @media(max-width:1100px){.hero-in{grid-template-columns:1fr}.ftp{grid-template-columns:1fr 1fr;gap:26px}}
 @media(max-width:900px){.hcard{display:none}.ag{grid-template-columns:1fr}.pfr{max-width:360px;margin:0 auto}.ctg{grid-template-columns:1fr}.wsg{grid-template-columns:1fr}.galg{grid-template-columns:repeat(3,1fr);grid-auto-rows:130px}.gali.span2c.span2r,.gali.span2c,.gali.span2r{grid-column:span 1!important;grid-row:span 1!important}}
-@media(max-width:768px){.admin-sidebar{position:fixed;top:58px;left:0;height:calc(100vh - 58px);transform:translateX(-100%);box-shadow:4px 0 20px rgba(0,0,0,.15)}.admin-sidebar.mobile-open{transform:translateX(0)}.admin-main{padding:14px}.fg-row{grid-template-columns:1fr}.prog-admin-grid{grid-template-columns:1fr}.stat-grid{grid-template-columns:1fr 1fr}.modal{max-width:100%}.admin-topbar{padding:0 12px}.gal-admin-grid{grid-template-columns:repeat(auto-fill,minmax(110px,1fr))}}
-@media(max-width:640px){.nav-links{display:none}.hamburger{display:flex}.galg{grid-template-columns:repeat(2,1fr);grid-auto-rows:110px}.gali.span2c.span2r,.gali.span2c,.gali.span2r{grid-column:span 1!important;grid-row:span 1!important}.hbtns{flex-direction:column;align-items:flex-start}.ftp{grid-template-columns:1fr}.fbot{flex-direction:column;text-align:center}.sw{padding:56px 0}.frow{grid-template-columns:1fr}.ssi{gap:8px}.dollar-grid{grid-template-columns:1fr}.wab-in{flex-direction:column;gap:10px;text-align:center}.topbar{font-size:11px;gap:3px 12px}.prgg{grid-template-columns:1fr}.sermon-embed-wrap{min-height:220px;}}
+@media(max-width:768px){.admin-sidebar{position:fixed;top:58px;left:0;height:calc(100vh - 58px);transform:translateX(-100%);box-shadow:4px 0 20px rgba(0,0,0,.15)}.admin-sidebar.mobile-open{transform:translateX(0)}.admin-main{padding:14px}.fg-row{grid-template-columns:1fr}.prog-admin-grid{grid-template-columns:1fr}.sermon-admin-grid{grid-template-columns:1fr}.stat-grid{grid-template-columns:1fr 1fr}.modal{max-width:100%}.admin-topbar{padding:0 12px}.gal-admin-grid{grid-template-columns:repeat(auto-fill,minmax(110px,1fr))}}
+@media(max-width:640px){.nav-links{display:none}.hamburger{display:flex}.galg{grid-template-columns:repeat(2,1fr);grid-auto-rows:110px}.gali.span2c.span2r,.gali.span2c,.gali.span2r{grid-column:span 1!important;grid-row:span 1!important}.hbtns{flex-direction:column;align-items:flex-start}.ftp{grid-template-columns:1fr}.fbot{flex-direction:column;text-align:center}.sw{padding:56px 0}.frow{grid-template-columns:1fr}.ssi{gap:8px}.dollar-grid{grid-template-columns:1fr}.wab-in{flex-direction:column;gap:10px;text-align:center}.topbar{font-size:11px;gap:3px 12px}.prgg{grid-template-columns:1fr}.sermon-embed-wrap{min-height:200px;}}
 @media(max-width:400px){.galg{grid-template-columns:repeat(2,1fr);grid-auto-rows:95px}.gal-admin-grid{grid-template-columns:repeat(2,1fr)}}
 </style>
 </head>
 <body>
-
-<div id="fb-root"></div>
-<script>
-window.fbReady = false;
-window.fbAsyncInit = function() {
-  FB.init({ xfbml: true, version: 'v19.0' });
-  window.fbReady = true;
-  var grid = document.getElementById('site-sermons-grid');
-  if (grid) { try { FB.XFBML.parse(grid); } catch(e) {} }
-};
-(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) return;
-  js = d.createElement(s); js.id = id;
-  js.src = 'https://connect.facebook.net/en_US/sdk.js';
-  js.async = true; js.defer = true; js.crossOrigin = 'anonymous';
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));
-</script>
 
 <div class="loading-overlay" id="loading-overlay">
   <div class="spin" style="width:32px;height:32px;border-width:3px"></div>
@@ -540,7 +526,7 @@ window.fbAsyncInit = function() {
         </div>
         <div class="fpanel" style="border:1px solid rgba(245,197,24,.3)">
           <h3>How It Works</h3>
-          <p style="font-size:13px;color:var(--muted);line-height:1.8">Photos upload automatically via ImgBB &amp; links save to JSONBin. For Sermons, just paste a Facebook video link — it shows live on the website with reactions.</p>
+          <p style="font-size:13px;color:var(--muted);line-height:1.8">Photos and Sermon videos upload directly from this admin panel and go live on the website immediately. For Sermons, tap "Add Sermon," choose a video file (2&ndash;5 min works great), and it uploads and plays right on the site &mdash; no Facebook or third-party link needed.</p>
         </div>
       </div>
 
@@ -553,39 +539,26 @@ window.fbAsyncInit = function() {
       <!-- SERMONS ADMIN -->
       <div class="apage" id="apage-sermons">
         <div class="page-header">
-          <h2>Sermons (Facebook Videos)</h2>
-          <p>Paste Facebook video links below. They will show live on the website with Facebook reactions.</p>
+          <h2>Sermons (Videos)</h2>
+          <p>Upload sermon videos directly &mdash; they play right on the website. No Facebook link needed.</p>
         </div>
-        <div class="fpanel" style="border:2px solid rgba(24,119,242,.3)">
-          <h3 style="color:#1877F2">&#9654; How to get a Facebook video link</h3>
-          <p style="font-size:13px;color:var(--muted);line-height:1.8;margin-bottom:0">Go to your Facebook post &rarr; Click the 3 dots (...) on the post &rarr; Click <strong>"Copy link"</strong> &rarr; Paste it below. That's it!</p>
-        </div>
-        <div class="fpanel">
-          <h3>Sermon Video 1</h3>
-          <div class="fg">
-            <label>Facebook Video Link</label>
-            <input type="url" id="sermon-url-1" placeholder="e.g. https://www.facebook.com/watch/?v=123456789" oninput="previewSermonUrl(1)"/>
-            <small>Paste the Facebook post or video link here</small>
-          </div>
-          <div class="sermon-url-preview" id="sermon-preview-1"></div>
-          <div style="margin-top:14px"><button class="btn btn-primary" onclick="saveSermons()">Save Sermons</button></div>
+        <div class="fpanel" style="border:2px solid rgba(37,99,168,.3);background:#eff6ff">
+          <h3 style="color:var(--mid)">&#9654; How to add a sermon</h3>
+          <p style="font-size:13px;color:var(--muted);line-height:1.8;margin-bottom:0">Tap <strong>"+ Add Sermon"</strong> below &rarr; choose a video file from your phone or computer (2&ndash;5 minutes works best) &rarr; give it a title (optional) &rarr; tap Save. It uploads automatically and appears live on the website right away.</p>
         </div>
         <div class="fpanel">
-          <h3>Sermon Video 2</h3>
-          <div class="fg">
-            <label>Facebook Video Link</label>
-            <input type="url" id="sermon-url-2" placeholder="e.g. https://www.facebook.com/watch/?v=123456789" oninput="previewSermonUrl(2)"/>
-            <small>Paste the Facebook post or video link here</small>
+          <div class="fpanel-head">
+            <h3 style="margin:0;padding:0;border:0">All Sermons</h3>
+            <button class="btn btn-primary btn-sm" onclick="openSermonModal()">+ Add Sermon</button>
           </div>
-          <div class="sermon-url-preview" id="sermon-preview-2"></div>
-          <div style="margin-top:14px"><button class="btn btn-primary" onclick="saveSermons()">Save Sermons</button></div>
+          <div class="sermon-admin-grid" id="sermon-admin-grid"></div>
         </div>
         <div class="fpanel" style="background:#eff6ff;border:1px solid #bfdbfe">
           <h3 style="color:#1e40af">&#128161; Tips</h3>
           <ul style="font-size:13px;color:#1e40af;line-height:2;padding-left:18px">
-            <li>You can leave one or both fields empty if you don't have 2 videos yet</li>
-            <li>Every time you want to update, just paste a new link and click Save</li>
-            <li>Always click <strong>Save Sermons</strong> after pasting new links</li>
+            <li>Keep videos around 2&ndash;5 minutes for the best upload speed and viewer experience</li>
+            <li>You can edit a sermon's title or replace its video anytime by tapping Edit</li>
+            <li>Removing a sermon takes it off the website immediately</li>
           </ul>
         </div>
       </div>
@@ -700,6 +673,31 @@ window.fbAsyncInit = function() {
     <div class="modal-footer">
       <button class="btn btn-outline" onclick="closeModal('gal-modal')">Cancel</button>
       <button class="btn btn-primary" id="gal-save-btn" onclick="confirmGalReplace()">Replace &amp; Save to Site</button>
+    </div>
+  </div>
+</div>
+
+<!-- SERMON ADD/EDIT MODAL -->
+<div class="modal-overlay" id="sermon-modal">
+  <div class="modal">
+    <div class="modal-header"><h3 id="sermon-modal-title">Add Sermon</h3><button class="modal-close" onclick="closeModal('sermon-modal')">&#10005;</button></div>
+    <div class="modal-body">
+      <input type="hidden" id="sermon-edit-idx" value="-1"/>
+      <div class="fg"><label>Title (optional)</label><input type="text" id="sermon-title" placeholder="e.g. Sunday Service - 20 July 2026" maxlength="100"/></div>
+      <div class="fg">
+        <label>Video File</label>
+        <div class="upload-area">
+          <input type="file" id="sermon-video-upload" accept="video/mp4,video/quicktime,video/*" onchange="handleSermonVideoUpload(this)"/>
+          <div class="upload-icon">&#127909;</div>
+          <p>Tap to select a video<br/><strong>MP4 or MOV, ideally 2&ndash;5 minutes</strong></p>
+        </div>
+        <div class="upload-status" id="sermon-upload-status"></div>
+        <video id="sermon-video-preview" class="preview-video" controls playsinline></video>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeModal('sermon-modal')">Cancel</button>
+      <button class="btn btn-primary" id="sermon-save-btn" onclick="saveSermonModal()">Save Sermon</button>
     </div>
   </div>
 </div>
@@ -904,7 +902,7 @@ window.fbAsyncInit = function() {
     <span class="stag-w">Watch &amp; Be Blessed</span>
     <h2 class="stitle-w">Sermons</h2>
     <div class="sline"></div>
-    <p class="ssub-w">Watch our latest messages. React and share to spread the Word.</p>
+    <p class="ssub-w">Watch our latest messages, right here on the website.</p>
     <div class="sermons-grid" id="site-sermons-grid">
       <div class="sermon-no-videos">
         <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
@@ -1112,6 +1110,9 @@ var JSONBIN_BIN_ID  = '69f9c58936566621a828f253';
 var JSONBIN_API_KEY = '$2a$10$TCyX72eDYbv/nW0KrKJZE.IHBI6/AgK8ar71B51vw430mlkThhby.';
 var IMGBB_API_KEY   = 'f1837afd620d3a1edd8d8a7ddf290d9d';
 var JSONBIN_URL = 'https://api.jsonbin.io/v3/b/';
+var CLOUDINARY_CLOUD_NAME = 'rgs93aju';
+var CLOUDINARY_UPLOAD_PRESET = 'hswa_sermons';
+var CLOUDINARY_VIDEO_UPLOAD_URL = 'https://api.cloudinary.com/v1_1/' + CLOUDINARY_CLOUD_NAME + '/video/upload';
 
 var DEFAULT_DATA = {
   gallery:[
@@ -1131,13 +1132,13 @@ var DEFAULT_DATA = {
     {title:'APRIL FINANCIAL DOMINION CONFERENCE',desc:'Grace for Wealth Creation is a multi-day financial empowerment conference designed to equip believers with practical and spiritual principles for building and sustaining wealth. Features teachings from Pastor KK (Father) and Pastor Akande, addressing stewardship, financial discipline, and kingdom-based prosperity.',date:'THIS THURSDAY, FRIDAY AND SUNDAY',time:'5PM DAILY & 7AM ON SUNDAY',tag:'THIS THURSDAY, FRIDAY AND SUNDAY',img:''},
     {title:'TAKING POSSESSION OF THE WEEK',desc:"Weekly prayer encounter focused on setting the tone for the days ahead. A one-hour live session of worship, prayer, and prophetic declarations led by Pastor Akande Owen. Join every Monday from 6:00-7:00 AM as we align with God's purpose. Join us on Facebook every Monday.",date:'Every Monday',time:'6:00AM - 7:00AM',tag:'EVERY MONDAY',img:''}
   ],
-  sermons:{url1:'',url2:''},
+  sermons:[],
   logo:'heavenlylogo.JPG',
   pastor:'pastor.jpg'
 };
 
 var siteData = JSON.parse(JSON.stringify(DEFAULT_DATA));
-var pendingGalURL=null, pendingProgURL=null, pendingLogoURL=null, pendingPastorURL=null;
+var pendingGalURL=null, pendingProgURL=null, pendingLogoURL=null, pendingPastorURL=null, pendingSermonURL=null;
 
 async function sha256(str) {
   var buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
@@ -1184,6 +1185,36 @@ async function uploadToImgBB(base64DataURL) {
   return json.data.url;
 }
 
+function uploadVideoToCloudinary(file, onProgress) {
+  return new Promise(function(resolve, reject) {
+    if (!file) { reject(new Error('No file selected.')); return; }
+    if (file.size > 300 * 1024 * 1024) { reject(new Error('Video too large (max 300MB). Try a shorter or lower-quality clip.')); return; }
+    var form = new FormData();
+    form.append('file', file);
+    form.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
+    form.append('resource_type', 'video');
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', CLOUDINARY_VIDEO_UPLOAD_URL, true);
+    xhr.upload.onprogress = function(e) {
+      if (onProgress && e.lengthComputable) {
+        onProgress(Math.round((e.loaded / e.total) * 100));
+      }
+    };
+    xhr.onload = function() {
+      var json;
+      try { json = JSON.parse(xhr.responseText); } catch (err) { json = null; }
+      if (xhr.status >= 200 && xhr.status < 300 && json && json.secure_url) {
+        resolve(json.secure_url);
+      } else {
+        var msg = (json && json.error && json.error.message) || ('Upload failed (HTTP ' + xhr.status + ')');
+        reject(new Error(msg));
+      }
+    };
+    xhr.onerror = function() { reject(new Error('Network error during upload.')); };
+    xhr.send(form);
+  });
+}
+
 function setUploadStatus(id, type, msg) {
   var el = document.getElementById(id); if (!el) return;
   el.className = 'upload-status show ' + type;
@@ -1214,7 +1245,7 @@ function showLoading(msg) { document.getElementById('loading-overlay').classList
 function hideLoading() { document.getElementById('loading-overlay').classList.remove('show'); }
 
 function isValidRecord(r) {
-  return r && Array.isArray(r.gallery) && r.gallery.length > 0 && Array.isArray(r.programs) && r.sermons;
+  return r && Array.isArray(r.gallery) && r.gallery.length > 0 && Array.isArray(r.programs);
 }
 
 async function fetchFromBin() {
@@ -1243,7 +1274,8 @@ async function initApp() {
   showLoading('Loading site content...');
   var remote = await fetchFromBin();
   if (remote) siteData = remote;
-  if (!siteData.sermons) siteData.sermons = { url1: '', url2: '' };
+  /* Migrate legacy sermons format (old Facebook-link {url1,url2} object) to the new video array. */
+  if (!Array.isArray(siteData.sermons)) siteData.sermons = [];
   hideLoading();
   renderSiteContent();
   initReveal();
@@ -1300,7 +1332,7 @@ function showAdmin() {
   renderAdminGallery();
   renderAdminPrograms();
   renderBrandingPreviews();
-  loadSermonsAdmin();
+  renderAdminSermons();
   updateDashboardStats();
   window.scrollTo(0, 0);
 }
@@ -1316,8 +1348,7 @@ function backToSite() {
 function updateDashboardStats() {
   var g = (siteData.gallery || []).length;
   var p = (siteData.programs || []).length;
-  var s = siteData.sermons || {};
-  var sc = [s.url1, s.url2].filter(function(u){ return u && u.trim(); }).length;
+  var sc = Array.isArray(siteData.sermons) ? siteData.sermons.length : 0;
   var gc = document.getElementById('dash-gallery-count'); if (gc) gc.textContent = g;
   var pc = document.getElementById('dash-programs-count'); if (pc) pc.textContent = p;
   var sct = document.getElementById('dash-sermons-count'); if (sct) sct.textContent = sc;
@@ -1404,32 +1435,117 @@ async function confirmGalReplace() {
   }
 }
 
-function loadSermonsAdmin() {
-  var s = siteData.sermons || { url1: '', url2: '' };
-  var inp1 = document.getElementById('sermon-url-1'); if (inp1) inp1.value = s.url1 || '';
-  var inp2 = document.getElementById('sermon-url-2'); if (inp2) inp2.value = s.url2 || '';
-  previewSermonUrl(1); previewSermonUrl(2);
+/* ═══ SERMONS ADMIN (Cloudinary video upload) ═══ */
+function renderAdminSermons() {
+  var grid = document.getElementById('sermon-admin-grid'); if (!grid) return;
+  grid.innerHTML = '';
+  var sermons = Array.isArray(siteData.sermons) ? siteData.sermons : [];
+  if (sermons.length === 0) {
+    grid.innerHTML = '<div class="sermon-empty-state">No sermons yet. Tap "+ Add Sermon" above to upload the first one.</div>';
+    return;
+  }
+  sermons.forEach(function(s, i){
+    var card = document.createElement('div'); card.className = 'sermon-admin-card';
+    var title = s.title && s.title.trim() ? s.title.trim() : ('Sermon ' + (i + 1));
+    card.innerHTML = '<div class="sermon-admin-vid"><video src="' + esc(s.video) + '" muted preload="metadata"></video></div>' +
+      '<div class="sermon-admin-body"><div class="sermon-admin-title">' + esc(title) + '</div>' +
+      '<div class="sermon-admin-meta">Video ' + (i+1) + ' of ' + sermons.length + '</div>' +
+      '<div class="sermon-admin-actions"><button class="btn btn-outline btn-sm" onclick="openSermonModal(' + i + ')">Edit</button>' +
+      '<button class="btn btn-red btn-sm" onclick="confirmDeleteSermon(' + i + ')">Delete</button></div></div>';
+    grid.appendChild(card);
+  });
 }
 
-function previewSermonUrl(num) {
-  var inp = document.getElementById('sermon-url-' + num); if (!inp) return;
-  var val = inp.value || '';
-  var prev = document.getElementById('sermon-preview-' + num); if (!prev) return;
-  if (val.trim() && val.indexOf('facebook.com') !== -1) {
-    prev.textContent = 'Link detected: ' + val.trim(); prev.classList.add('show');
-  } else { prev.textContent = ''; prev.classList.remove('show'); }
+function openSermonModal(idx) {
+  var isEdit = (typeof idx === 'number' && idx >= 0);
+  document.getElementById('sermon-edit-idx').value = isEdit ? idx : -1;
+  document.getElementById('sermon-modal-title').textContent = isEdit ? 'Edit Sermon' : 'Add Sermon';
+  document.getElementById('sermon-title').value = isEdit ? ((siteData.sermons[idx] && siteData.sermons[idx].title) || '') : '';
+  document.getElementById('sermon-video-upload').value = '';
+  clearUploadStatus('sermon-upload-status'); pendingSermonURL = null;
+  var prev = document.getElementById('sermon-video-preview');
+  if (isEdit && siteData.sermons[idx] && siteData.sermons[idx].video) {
+    prev.src = siteData.sermons[idx].video; prev.classList.add('show');
+  } else {
+    prev.src = ''; prev.classList.remove('show');
+  }
+  var saveBtn = document.getElementById('sermon-save-btn'); saveBtn.disabled = false; saveBtn.textContent = 'Save Sermon';
+  openModal('sermon-modal');
 }
 
-async function saveSermons() {
-  var url1 = (document.getElementById('sermon-url-1').value || '').trim();
-  var url2 = (document.getElementById('sermon-url-2').value || '').trim();
-  if (!siteData.sermons) siteData.sermons = {};
-  siteData.sermons.url1 = url1; siteData.sermons.url2 = url2;
+async function handleSermonVideoUpload(input) {
+  var file = input.files[0]; if (!file) return;
+  var saveBtn = document.getElementById('sermon-save-btn');
+  var prev = document.getElementById('sermon-video-preview');
+  saveBtn.disabled = true; pendingSermonURL = null;
+  clearUploadStatus('sermon-upload-status');
+
+  if (file.type && file.type.indexOf('video/') !== 0) {
+    setUploadStatus('sermon-upload-status', 'error', '&#10005; Please select a video file.');
+    saveBtn.disabled = false; input.value = ''; return;
+  }
+
+  var localURL = URL.createObjectURL(file);
+  prev.src = localURL; prev.classList.add('show');
+  setUploadStatus('sermon-upload-status', 'uploading', 'Uploading... 0%');
+
+  try {
+    var url = await uploadVideoToCloudinary(file, function(pct){
+      setUploadStatus('sermon-upload-status', 'uploading', 'Uploading... ' + pct + '%');
+    });
+    pendingSermonURL = url;
+    setUploadStatus('sermon-upload-status', 'done', '&#10003; Upload successful — ready to save');
+    saveBtn.disabled = false;
+  } catch (e) {
+    setUploadStatus('sermon-upload-status', 'error', '&#10005; ' + e.message);
+    saveBtn.disabled = false;
+  }
+  input.value = '';
+}
+
+async function saveSermonModal() {
+  var idx = parseInt(document.getElementById('sermon-edit-idx').value);
+  var isEdit = idx >= 0;
+  var title = document.getElementById('sermon-title').value.trim();
+  var existingVideo = isEdit && siteData.sermons[idx] ? siteData.sermons[idx].video : '';
+  var videoUrl = pendingSermonURL || existingVideo;
+
+  if (!videoUrl) { toast('Please select and wait for a video to finish uploading first.', 'terror'); return; }
+
+  var saveBtn = document.getElementById('sermon-save-btn'); saveBtn.disabled = true; saveBtn.innerHTML = '<span class="spin"></span> Saving...';
+
+  if (!Array.isArray(siteData.sermons)) siteData.sermons = [];
+  var record = { title: title, video: videoUrl };
+  if (isEdit) siteData.sermons[idx] = record; else siteData.sermons.push(record);
+
   var result = await saveToBin(siteData);
+  saveBtn.disabled = false; saveBtn.textContent = 'Save Sermon';
   if (result.ok) {
-    renderSiteSermons(); updateDashboardStats();
-    toast('Sermons saved! Visible on the website now.', 'tsuccess');
-  } else { toast('Save failed: ' + result.msg, 'terror'); }
+    closeModal('sermon-modal'); renderAdminSermons(); renderSiteSermons(); pendingSermonURL = null;
+    updateDashboardStats();
+    toast('Sermon saved! Visible on the website now.', 'tsuccess');
+  } else {
+    toast('Save failed: ' + result.msg, 'terror');
+  }
+}
+
+function confirmDeleteSermon(idx) {
+  var sermons = siteData.sermons || [];
+  var s = sermons[idx];
+  var label = (s && s.title && s.title.trim()) ? s.title.trim() : ('Sermon ' + (idx + 1));
+  showConfirm('Delete Sermon?', 'This will remove "' + label + '" from the website immediately. This cannot be undone.', 'Delete', async function(){
+    siteData.sermons.splice(idx, 1);
+    showLoading('Deleting...');
+    var result = await saveToBin(siteData);
+    hideLoading();
+    if (result.ok) {
+      renderAdminSermons(); renderSiteSermons(); updateDashboardStats();
+      toast('Sermon deleted.', 'tsuccess');
+    } else {
+      siteData.sermons.splice(idx, 0, s);
+      toast('Delete failed: ' + result.msg, 'terror');
+    }
+  });
 }
 
 function renderAdminPrograms() {
@@ -1661,88 +1777,43 @@ function renderSitePrograms() {
   initReveal();
 }
 
-/* ═══ SERMONS RENDER — FIXED ═══
-   Key changes:
-   1. data-width uses the actual container pixel width instead of "auto"
-   2. After injecting, we measure the container and set a pixel width so FB SDK renders correctly
-   3. We re-parse XFBML after a short delay to give the SDK time to pick up new elements
-*/
-function getSermonEmbedWidth() {
-  // Use the sermons grid container width minus padding, capped at 640
-  var grid = document.getElementById('site-sermons-grid');
-  if (grid) {
-    var w = grid.offsetWidth;
-    if (w > 40) return Math.min(w - 32, 640);
-  }
-  return 560;
-}
-
+/* ═══ SERMONS RENDER — direct video upload (Cloudinary), no Facebook dependency ═══ */
 function renderSiteSermons() {
   var grid = document.getElementById('site-sermons-grid'); if (!grid) return;
   grid.innerHTML = '';
-  var s = siteData.sermons || { url1: '', url2: '' };
-  var urls = [s.url1, s.url2].filter(function(u){ return u && u.trim() && u.indexOf('facebook.com') !== -1; });
+  var sermons = Array.isArray(siteData.sermons) ? siteData.sermons.filter(function(s){ return s && s.video; }) : [];
 
-  if (urls.length === 0) {
+  if (sermons.length === 0) {
     grid.innerHTML = '<div class="sermon-no-videos">' +
       '<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>' +
       '<p style="margin-top:12px">No sermons uploaded yet.<br/>Check back soon!</p></div>';
     return;
   }
 
-  var embedWidth = getSermonEmbedWidth();
-
-  urls.forEach(function(url, i){
+  sermons.forEach(function(s, i){
     var item = document.createElement('div');
     item.className = 'sermon-item reveal';
 
-    // Label
     var label = document.createElement('span');
     label.className = 'sermon-item-label';
-    label.textContent = 'Sermon ' + (i + 1);
+    label.textContent = (s.title && s.title.trim()) ? s.title.trim() : ('Sermon ' + (i + 1));
     item.appendChild(label);
 
-    // Embed wrapper
     var wrap = document.createElement('div');
     wrap.className = 'sermon-embed-wrap';
 
-    // FB video div — use measured pixel width
-    var fbDiv = document.createElement('div');
-    fbDiv.className = 'fb-video';
-    fbDiv.setAttribute('data-href', url.trim());
-    fbDiv.setAttribute('data-width', String(embedWidth));
-    fbDiv.setAttribute('data-allowfullscreen', 'true');
-    fbDiv.setAttribute('data-show-text', 'false');
-    wrap.appendChild(fbDiv);
+    var vid = document.createElement('video');
+    vid.src = s.video;
+    vid.controls = true;
+    vid.playsInline = true;
+    vid.preload = 'metadata';
+    wrap.appendChild(vid);
     item.appendChild(wrap);
-
-    // Reactions / like bar
-    var likeWrap = document.createElement('div');
-    likeWrap.className = 'sermon-reactions';
-    var fbLike = document.createElement('div');
-    fbLike.className = 'fb-like';
-    fbLike.setAttribute('data-href', url.trim());
-    fbLike.setAttribute('data-width', '');
-    fbLike.setAttribute('data-layout', 'standard');
-    fbLike.setAttribute('data-action', 'like');
-    fbLike.setAttribute('data-size', 'small');
-    fbLike.setAttribute('data-share', 'true');
-    likeWrap.appendChild(fbLike);
-    item.appendChild(likeWrap);
 
     grid.appendChild(item);
   });
 
   initReveal();
-
-  // Parse XFBML — try immediately, then again after 800ms as fallback
-  function parseFB() {
-    if (window.fbReady && window.FB && window.FB.XFBML) {
-      try { window.FB.XFBML.parse(grid); } catch(e) {}
-    }
-  }
-  parseFB();
-  setTimeout(parseFB, 800);
 }
 
 document.getElementById('yr').textContent = new Date().getFullYear();
